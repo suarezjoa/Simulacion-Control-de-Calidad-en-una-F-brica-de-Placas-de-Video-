@@ -18,11 +18,9 @@ const rl = readline.createInterface({
     output: process.stdout
   });
 function capturarNumeroEntero() {
-    rl.question('Cantidad de Placa del lote', (entrada) => {
+    rl.question('Cantidad de Placa del lote;', (entrada) => {
       // Convertir la entrada en un número entero usando parseInt()
       let numeroEntero = parseInt(entrada);
-  
-
 
 
     rl.question("capturar probabilidad de fallo de una placa:", (otraEntrada)=>{
