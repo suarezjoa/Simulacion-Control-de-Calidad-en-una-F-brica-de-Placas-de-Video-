@@ -1,43 +1,48 @@
-function minCuadMedios(CantidadNumerosSucecion, semilla) {
-  let now = new Date();
-  let hour = now.getHours().toString().padStart(2, "0");
-  let minute = now.getMinutes().toString().padStart(2, "0");
-  let second = now.getSeconds().toString().padStart(2, "0");
-  let hora_actual = hour + minute + second;
-  let semillaHora = parseInt(hora_actual.substr(-4));
+function minCuadMedios(diasDeSimulacion, semilla) {
+    let now = new Date();
+    let hour = now.getHours().toString().padStart(2, "0");
+    let minute = now.getMinutes().toString().padStart(2, "0");
+    let second = now.getSeconds().toString().padStart(2, "0");
+    let hora_actual = hour + minute + second;
+    let semillaHora = parseInt(hora_actual.substr(-4));
+    
+    let numerosGenerados = [];
+    let auxiliar = (diasDeSimulacion * 4 ) - diasDeSimulacion;
+    diasDeSimulacion = diasDeSimulacion * 4;
+    let x = 0;
+    let contadorIteraciones = 0;
   
-  let numerosGenerados = [];
-  CantidadNumerosSucecion = CantidadNumerosSucecion * 2;
-  let contadorIteraciones = 0;
-
-  while (numerosGenerados.length < CantidadNumerosSucecion) {
-      if (contadorIteraciones < 5) {
-          semilla = parseInt((semilla * semilla).toString().padStart(8, "0").substr(2, 4));
-          contadorIteraciones++;
-      } else {
-          semilla = semilla * semillaHora; // Variar la semilla multiplicándola por el valor de la hora actual
-      }
-
-      let numString = semilla.toString();
-      
-      for (let j = 0; j < numString.length && numerosGenerados.length < CantidadNumerosSucecion; j++) {
-          numerosGenerados.push(parseInt(numString[j]));
-      }
+    for (let i = auxiliar; i < diasDeSimulacion; i++) {
+        if (contadorIteraciones < 5) {
+            // Cálculo del siguiente número aleatorio
+            semilla = parseInt((semilla * semilla).toString().padStart(8, "0").substr(2, 4));
+            contadorIteraciones++;
+        } else {
+            // Modificar la semilla antes de cada iteración
+            semilla = semilla * semillaHora; // Variar la semilla multiplicándola por el valor de la hora actual
+        }
+  
+        // Asegurarse de que la semilla tenga al menos 4 dígitos
+        if (semilla < 1000) {
+            semilla = semilla * 10; // Ajustar la semilla si es necesario
+        }
+  
+        let numString = semilla.toString();
+  
+        // Iterar sobre cada dígito y agregarlo al arreglo
+        for (let j = 0; j < numString.length; j++) {
+            if (x < auxiliar) {
+                let num = parseInt(numString[j]);
+                if (!isNaN(num)) { // Verificar que el número no sea NaN
+                    numerosGenerados.push(num);
+                    x++;
+                }
+            } else {
+                return numerosGenerados;
+            }    
+        }
+    }
+    return numerosGenerados;
   }
   
-  // Filtrar cualquier valor NaN del arreglo generado
-  numerosGenerados = numerosGenerados.filter(num => !isNaN(num));
-  
-  // Si aún hay valores NaN después de la filtración, generar más números aleatorios
-  while (numerosGenerados.length < CantidadNumerosSucecion) {
-      semilla = parseInt((semilla * semilla).toString().padStart(8, "0").substr(2, 4));
-      let numString = semilla.toString();
-      for (let j = 0; j < numString.length && numerosGenerados.length < CantidadNumerosSucecion; j++) {
-          numerosGenerados.push(parseInt(numString[j]));
-      }
-  }
-  
-  return numerosGenerados.slice(0, CantidadNumerosSucecion); // Recortar el arreglo para asegurarse de que tenga la longitud correcta
-}
-
-module.exports = minCuadMedios;
+      module.exports = minCuadMedios;
