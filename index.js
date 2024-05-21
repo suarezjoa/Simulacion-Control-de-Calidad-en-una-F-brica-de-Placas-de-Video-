@@ -22,7 +22,7 @@ function capturarNumeroEntero() {
       // Convertir la entrada en un número entero usando parseInt()
       let numeroEntero = parseInt(entrada);
 
-    rl.question("capturar probabilidad de fallo de una placa:", (otraEntrada)=>{
+    rl.question("capturar probabilidad de fallo de una placa con 2 numeros despues de la coma EJ, 0.01:", (otraEntrada)=>{
       let Probabilidad = parseFloat(otraEntrada);
     rl.question("Ingresar el maximo % de placas falladas del lote:", (fallolotePRO)=>{
       let maxFallosLote = parseInt(fallolotePRO);
@@ -35,7 +35,7 @@ function capturarNumeroEntero() {
       let h = 0;
       do {
         const sucecionNOaleatoria = minCuadMedios(numeroEntero, semillaHora);
-        let toleranciaDeFallosLote = fallolotePRO / 100
+        let toleranciaDeFallosLote = maxFallosLote / 100
         if (validacionAletioridadSucecion(ValorObsrvado(FrecuenciaEsperada(numeroEntero),calcularFrecuencia(sucecionNOaleatoria))) === true) {
           let totalFalladosLote = inspeccionPlacasMuestra(generarLote(sucecionNOaleatoria,Probabilidad,numeroEntero),[0,0,0],numeroEntero)
           console.log("Placas con fallos encontradas en el lote ",totalFalladosLote);

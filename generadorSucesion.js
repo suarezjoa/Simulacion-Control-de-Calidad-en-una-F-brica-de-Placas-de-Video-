@@ -13,13 +13,14 @@ function minCuadMedios(diasDeSimulacion, semilla) {
     let contadorIteraciones = 0;
   
     for (let i = auxiliar; i < diasDeSimulacion; i++) {
-        if (contadorIteraciones < 5) {
+        if (contadorIteraciones < 10) {
             // Cálculo del siguiente número aleatorio
             semilla = parseInt((semilla * semilla).toString().padStart(8, "0").substr(2, 4));
             contadorIteraciones++;
         } else {
             // Modificar la semilla antes de cada iteración
-            semilla = semilla * semillaHora; // Variar la semilla multiplicándola por el valor de la hora actual
+            semilla = parseInt((semilla * semillaHora).toString().padStart(8, "0").substr(2, 4)); // Variar la semilla multiplicándola por el valor de la hora actual
+            contadorIteraciones = 0;
         }
   
         // Asegurarse de que la semilla tenga al menos 4 dígitos
